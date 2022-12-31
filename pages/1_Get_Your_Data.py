@@ -11,7 +11,8 @@ st.markdown("Small Limitation: To reduce the risk of the IP being blocked by Pla
 st.sidebar.markdown("# Scrape 🕷️")
 
 ALL_COUNTRIES_ALPHA_2 = [country.alpha_2.lower() for country in pycountry.countries]
-DEFAULT_COUNTRY_INDEX_EN = ALL_COUNTRIES_ALPHA_2.index("en")
+print(ALL_COUNTRIES_ALPHA_2)
+DEFAULT_COUNTRY_INDEX_EN = ALL_COUNTRIES_ALPHA_2.index("gb")
 DEFAULT_COUNTRY_INDEX_US = ALL_COUNTRIES_ALPHA_2.index("us")
 
 
@@ -29,6 +30,6 @@ with st.form("info_form", clear_on_submit=False):
         review = PlaystoreReview(input_url, input_language, input_location, input_count, input_stars)
         reviews = review.get_reviews()
         reviews = [r["content"] for r in reviews if r["content"]]
-        df = pd.DataFrame(reviews, column=["Review"])
+        df = pd.DataFrame(reviews, columns=["Review"])
 
         st.session_state["data"] = df
