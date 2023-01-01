@@ -1,28 +1,25 @@
 import streamlit as st
-from bertopic import BERTopic
-
+import pandas as pd
+from topic_modeling import preprocess, plot_bertopic
+from sentiment import load_model, extract_aspect_sentiment, predict_aspect_sentiment, convert_to_df, explode_df, group_df
 
 st.markdown("# Get your Data")
-
-def plot_bertopic(reviews_df):
-    # try:
-        topic_model = BERTopic(low_memory=True)
-        topics, probs = topic_model.fit_transform(reviews_df["Review"])
-        st.write(topic_model.get_topic_info())
-
-        # topic_model.get_representative_docs()
-
-        fig = topic_model.visualize_documents(reviews_df["Review"], topics)
-        st.plotly_chart(fig)
-
-        fig = topic_model.visualize_barchart()
-        st.plotly_chart(fig)
-
-        fig = topic_model.visualize_heatmap()
-        st.plotly_chart(fig)
         
 if "data" not in st.session_state:
     st.write("You first have to scrape your Playstore Reviews.")
     
 else:
+    st.session_state["data"]["Review_Processed"] = st.session_state["data"]["Review"].apply(lambda x: preprocess(x))
     plot_bertopic(st.session_state["data"])
+    
+    model = load_model()
+    df_sentiment = pd.DataFrame()
+    result = predict_aspect_sentiment(model, st.session_state["data"]["Review"].to_list())
+    aspect_sentiment = extract_aspect_sentiment(result)
+    df = convert_to_df(aspect_sentiment)
+    df = explode_df(df)
+    df = group_df(df)
+    
+    st.write(df)
+    
+    
