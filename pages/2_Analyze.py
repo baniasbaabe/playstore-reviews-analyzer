@@ -12,12 +12,11 @@ else:
     if st.button("Analyze via BerTOPIC"):
         st.session_state["data"]["Review_Processed"] = st.session_state["data"]["Review"].apply(lambda x: preprocess(x))
         plot_bertopic(st.session_state["data"])
-        
+    
+    if st.button("Run Aspect-based Sentiment Analysis"):
         model = load_model()
         df_sentiment = pd.DataFrame()
         result = predict_aspect_sentiment(model, st.session_state["data"]["Review"].to_list())
-    
-    if st.button("Run Aspect-based Sentiment Analysis"):
         aspect_sentiment = extract_aspect_sentiment(result)
         df = convert_to_df(aspect_sentiment)
         df = explode_df(df)
