@@ -1,4 +1,6 @@
 import streamlit as st
+import nltk
+nltk.download("punkt")
 
 st.markdown("# Topic Modeling and Sentiment Analysis with Playstore Reviews")
 st.sidebar.markdown("# Main page")

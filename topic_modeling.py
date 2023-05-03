@@ -10,12 +10,9 @@ def preprocess(x):
   return x
 
 def plot_bertopic(reviews_df):
-    # try:
         topic_model = BERTopic(low_memory=True)
         topics, probs = topic_model.fit_transform(reviews_df["Review_Processed"])
         st.write(topic_model.get_topic_info())
-
-        # topic_model.get_representative_docs()
 
         fig = topic_model.visualize_documents(reviews_df["Review"], topics)
         st.plotly_chart(fig)
