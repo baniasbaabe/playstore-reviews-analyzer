@@ -11,7 +11,7 @@ st.markdown("Small Limitation: To reduce the risk of the IP being blocked by Pla
 st.sidebar.markdown("# Scrape 🕷️")
 
 ALL_COUNTRIES_ALPHA_2 = [country.alpha_2.lower() for country in pycountry.countries]
-print(ALL_COUNTRIES_ALPHA_2)
+
 DEFAULT_COUNTRY_INDEX_EN = ALL_COUNTRIES_ALPHA_2.index("gb")
 DEFAULT_COUNTRY_INDEX_US = ALL_COUNTRIES_ALPHA_2.index("us")
 
@@ -20,7 +20,7 @@ with st.form("info_form", clear_on_submit=False):
     st.write("Provide some information")
     input_url = st.text_input("URL")
     input_language = st.sidebar.selectbox("Language", ALL_COUNTRIES_ALPHA_2, index=DEFAULT_COUNTRY_INDEX_EN)
-    input_location = st.sidebar.selectbox("Language", ALL_COUNTRIES_ALPHA_2, index=DEFAULT_COUNTRY_INDEX_US)
+    input_location = st.sidebar.selectbox("Location", ALL_COUNTRIES_ALPHA_2, index=DEFAULT_COUNTRY_INDEX_US)
     input_count = st.number_input("# Reviews", min_value=50, max_value=200, step=5)
     input_stars = st.radio("How many stars", [1, 2, 3, 4, 5, "All"])
     submitted = st.form_submit_button("Submit")
